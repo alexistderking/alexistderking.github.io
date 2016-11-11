@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Alex ist der King</title>
+	<meta charset="UTF-8">
+
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-family: sans-serif;
+		}
+		.container {		
+			width: 200px;
+			height: 260px;
+			margin: auto;
+			perspective: 800px;
+			cursor: pointer;			
+		}
+
+		/* Flip Card 1 */
+		.card {
+			width: 100%;
+			height: 100%;
+			transform-style: preserve-3d;
+			transition: transform 1s;
+			transform-origin: right center;
+		}
+		.card figure {
+			margin: 0;
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			backface-visibility: hidden;
+			line-height: 260px;
+			color: white;
+			text-align: center;
+			font-weight: bold;
+			font-size: 40px;
+		}
+		.card .front {
+			background: red;
+		}
+		.card .back {
+			background: blue;
+			transform: rotateY(180deg);
+		}
+		.card.flipped {
+			transform: rotateY(180deg);
+			transform: translateX(-100%) rotateY(-180deg);
+		}
+
+		/* Flip Card 2-axis */
+		.cardAlt {
+			width: 100%;
+			height: 100%;
+			transform-style: preserve-3d;
+			transition: transform 1s;
+			transform-origin: center center;
+		}
+		.cardAlt figure {
+			margin: 0;
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			backface-visibility: hidden;
+			line-height: 260px;
+			color: white;
+			text-align: center;
+			font-weight: bold;
+			font-size: 40px;
+		}
+		.cardAlt .front {
+			background: red;
+		}
+		.cardAlt .back {
+			width: 260px;
+			height: 200px;
+			background: blue;
+			transform: rotateX(180deg) rotateZ(-90deg);
+		}
+		.cardAlt.flipped {
+			transform: rotateZ(-90deg) rotateY(180deg) translateX(-60px) translateY(30px);
+		}
+	</style>
+</head>
+<body>
+	<!--
+	<section>
+		<center>
+		<h1>Flip Card 2-Axis</h1>
+		<p>2. Paragraph</p>
+		</center>
+	</section>
+
+	<section class="container">
+		<div class="cardAlt">
+			<figure class="front">CSS ist</figure>
+			<figure class="back">给</figure>
+		</div>
+	</section>
+
+	<section>
+		<center>
+		<h1>Flip Card 1</h1>
+		</center>
+	</section>
+	-->
+	<section class="container">
+		<div class="card">
+			<figure class="front">Alex ist</figure>
+			<figure class="back">der King</figure>
+		</div>
+	</section>
+	<section class="container">
+		<div class="card">
+			<figure class="front">Happy</figure>
+			<figure class="back">Birthday</figure>
+		</div>
+	</section>
+<script>
+	util = {}
+	util.hasClassName = function (elem, a) {
+		return new RegExp("(?:^|\\s+)" + a + "(?:\\s+|$)").test(elem.className);
+	};
+
+	util.addClassName = function (elem, a) {
+		if (!util.hasClassName(elem, a)) {
+		    elem.className = [elem.className, a].join(" ");
+		}
+	};
+
+	util.removeClassName = function (elem, b) {
+		if (util.hasClassName(elem, b)) {
+		    var a = elem.className;
+		    elem.className = a.replace(new RegExp("(?:^|\\s+)" + b + "(?:\\s+|$)", "g"), " ");
+		}
+	};
+
+	util.toggleClassName = function (elem, a) {
+	  util[util.hasClassName(elem, a) ? "removeClassName" : "addClassName"](elem, a);
+	};
+
+	window.onload = function() {
+		var cardsList = document.getElementsByClassName('card');
+		var cardsArray = Array.from(cardsList);
+		var cardsAltArray = Array.from(document.getElementsByClassName('cardAlt'));
+		cardsArray = cardsArray.concat(cardsAltArray);
+		//for (var i = 0; i < cards.length; i++) {
+		for (elem of cardsArray) {
+			//console.info(cardsArray[i]);
+			console.info(elem);
+			elem.addEventListener('click', function() {
+				console.info(this);
+				util.toggleClassName(this, 'flipped');
+			});
+		}
+	};
+</script>
+</body>
+</html>
